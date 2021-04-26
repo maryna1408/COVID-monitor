@@ -14,7 +14,8 @@ async function getData(url) {
     console.log(DATA)
 }
 
-getData('https://api-covid19.rnbo.gov.ua/data?to=2021-04-24')
+
+getData(`https://api-covid19.rnbo.gov.ua/data?to=${new Date().toJSON().split('T')[0]}`)
 
 
 function renderRows(data_array, node) {
