@@ -1,4 +1,4 @@
-const cardListEl = document.getElementById('cardList')
+const rowListEl = document.getElementById('rowList')
 
 
 
@@ -10,22 +10,22 @@ async function getData(url) {
     const response = await fetch(url)
     console.log(response)
     DATA = await response.json()
-    renderCards(DATA.world, cardListEl)
+    renderRows(DATA.world, rowListEl)
     console.log(DATA)
 }
 
 getData('https://api-covid19.rnbo.gov.ua/data?to=2021-04-24')
 
 
-function renderCards(data_array, node) {
+function renderRows(data_array, node) {
     let html = ''
   
-    data_array.forEach(el => html += createCardHTML(el));
+    data_array.forEach(el => html += createRowHTML(el));
   
     node.innerHTML = html
   }
   
-function createCardHTML(card_data) {
+function createRowHTML(card_data) {
     return `<div class="cards d-flex justify-content-between p-3 fs-4">
     <div class="country">${card_data.country}</div>
     <div class="confirmed">${card_data.confirmed}</div>
