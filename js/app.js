@@ -1,9 +1,5 @@
 const rowListEl = document.getElementById('rowList')
-const globalNumConfirmedEl = document.getElementById('globalNumConfirmed')
-const globalNumDeathsEl = document.getElementById('globalNumDeaths')
-const globalNumRecoveredEl = document.getElementById('globalNumRecovered')
-const globalNumExistingEl = document.getElementById('globalNumExisting')
-
+const globalNumEl = document.getElementById('globalNum')
 
 
 let DATA = []
@@ -13,25 +9,33 @@ async function getData(url) {
     console.log(response)
     DATA = await response.json()
     renderRows(DATA.world, rowListEl)
-    let confirmed = []
-    let deaths = []
-    let recovered = []
-    let existing = []
-    DATA.world.forEach( el => {
-        confirmed.push(el.confirmed), 
-        deaths.push(el.deaths), 
-        recovered.push(el.recovered), 
-        existing.push(el.existing)
-    }) 
-    globalNumConfirmedEl.textContent = confirmed.reduce((total, amount) => total + amount)
-    globalNumDeathsEl.textContent = deaths.reduce((total, amount) => total + amount)
-    globalNumRecoveredEl.textContent = recovered.reduce((total, amount) => total + amount)
-    globalNumExistingEl.textContent = existing.reduce((total, amount) => total + amount)
+    let globalNums = {
+        confirmed: 0,
+        deaths: 0,
+        recovered: 0,
+        existing: 0
+    }
+    DATA.world.forEach(el => {
+        globalNums = {
+            confirmed: globalNums.confirmed + el.confirmed,
+            deaths: globalNums.deaths + el.deaths,
+            recovered: globalNums.recovered + el.recovered,
+            existing: globalNums.existing + el.existing
+        }
+    })
     console.log(DATA)
+    renderNums(globalNums)
 }
 
-
 getData(`https://api-covid19.rnbo.gov.ua/data?to=${new Date().toJSON().split('T')[0]}`)
+
+
+function renderNums(data) {
+    globalNumEl.innerHTML = `<div class="globalNumSection w-100">Confirmed: <span>${data.confirmed}</span> </div>
+    <div class="globalNumSection w-100">Deaths: <span>${data.deaths}</span> </div>
+    <div class="globalNumSection w-100">Recovered: <span>${data.recovered}</span> </div>
+    <div class="globalNumSection w-100">Existing: <span>${data.existing}</span> </div>`
+}
 
 
 function renderRows(data_array, node) {
