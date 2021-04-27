@@ -44,8 +44,8 @@ function renderRows(data_array, node) {
   }
   
 function createRowHTML(card_data) {
-    return `<div class="cards d-flex justify-content-between  p-3 fs-4">
-    <div class="country w-100">${card_data.country}</div>
+    return `<div class="cards d-flex justify-content-between  text-center py-3 fs-4">
+    <div class="country w-100 text-start">${card_data.country}</div>
     <div class="confirmed w-100">${card_data.confirmed}</div>
     <div class="deaths w-100">${card_data.deaths}</div>
     <div class="recovered w-100">${card_data.recovered}</div>
